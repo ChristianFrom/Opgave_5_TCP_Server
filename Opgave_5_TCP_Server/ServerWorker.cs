@@ -55,10 +55,9 @@ namespace Opgave_5_TCP_Server
                 {
                     
                     string str = sr.ReadLine().ToLower();
-                    string[] strings = str.Split(" ");
-                    if (strings[0] == "hentalle")
+                    string str2 = sr.ReadLine().ToLower();
+                    if (str == "hent alle")
                     {
-                        sw.WriteLine("Test");
                         foreach (Book book in books)
                         {
                             string jsonBook = JsonConvert.SerializeObject(book);
@@ -66,14 +65,12 @@ namespace Opgave_5_TCP_Server
                             sw.WriteLine(jsonBook);
                         }
                     }
-                    else if (strings[0] == "hent" && strings[1].Length == 13)
+                    else if (str == "hent" )
                     {
-                        Book jsonBook = bookSortList(strings[1]);
-                        string jsonSend = JsonConvert.SerializeObject(jsonBook);
-                        Console.WriteLine(jsonSend);
-                        sw.WriteLine(jsonSend);
+                        string jsonStr = JsonConvert.SerializeObject(books.Find(i => i.Isbn13 == str2));
+                        sw.WriteLine(jsonStr);
                     }
-                    else if (strings[0] == "gem")
+                    else if (str == "gem")
                     {
                         string stringToRead = sr.ReadLine();
                         Book book = JsonConvert.DeserializeObject<Book>(stringToRead);
@@ -87,18 +84,6 @@ namespace Opgave_5_TCP_Server
 
 
 
-        public Book bookSortList(string myarray)
-        {
-            Book myBook = new Book();
-            foreach (var book in books)
-            {
-                if (book.Isbn13 == myarray)
-                {
-                    myBook = book;
-                }
-            }
-
-            return myBook;
-        }
+       
     }
 }
